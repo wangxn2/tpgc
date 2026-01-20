@@ -49,8 +49,18 @@ MODEL_PATH_LSTM = "./models/traj_model_120.h5"
 MODEL_PATH_CNN = "./models/cnn_ris_model.h5"
 NORMALIZATION_PATH = "./models/traj_model_trueNorm.npy"
 
+def dbm_to_watt(dbm):
+    """Convert dBm to Watts"""
+    return 10 ** ((dbm - 30) / 10.0)
+
+def watt_to_dbm(watt):
+    """Convert Watts to dBm"""
+    return 10 * np.log10(watt * 1000)
+
 # Analysis parameters
-POWER_LEVELS = [0.050, 0.112, 0.223, 0.334, 0.445, 0.556, 0.667, 0.778, 0.889, 1.0]
+#POWER_LEVELS = [0.050, 0.112, 0.223, 0.334, 0.445, 0.556, 0.667, 0.778, 0.889, 1.0]
+POWER_DBM_RANGE = list(range(0, 26,5))  # 0-25 dBm in 1 dBm steps
+POWER_LEVELS = [dbm_to_watt(dbm) for dbm in POWER_DBM_RANGE]  # Corresponding linear power values
 ELEMENT_COUNTS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
 
 # Visualization settings
